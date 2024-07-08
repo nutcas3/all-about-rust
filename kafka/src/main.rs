@@ -7,9 +7,10 @@ use tokio::io::{AsyncBufReadExt,AsyncWriteExt,BufReader}
 use uuid::{Uuid};
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut stdout = tokio::io::stdout();
+    let mut input_lines = BufReader::new(tokio::io::stdin()).lines();
 
-    stdout.write(b"Welcome to Kafka!\n").await.unwrap();
+    stdout.write(b"Welcome to Kafka!\n").await?;
 
 }
