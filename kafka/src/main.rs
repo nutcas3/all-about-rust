@@ -13,4 +13,18 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     stdout.write(b"Welcome to Kafka!\n").await?;
 
+    let name;
+    loop {
+        stdout.write(b"Please enter your name: ").await?;
+        stdout.flush().await?;
+ 
+        if let Some(s) = input_lines.next_line().await? {
+            if s.is_empty() {
+                continue;
+            }
+ 
+            name = s;
+            break;
+        }
+    };
 }
