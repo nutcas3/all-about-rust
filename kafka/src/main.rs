@@ -27,4 +27,19 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             break;
         }
     };
+    let producer = create_producer(&args().skip(1).next()
+    .unwrap_or("localhost:9092".to_string()))?;
+
+stdout.write("-------------\n\n".as_bytes()).await.unwrap();
+
+producer.send(FutureRecord::to("chat")
+    .key(&name)
+    .payload(b"has joined the chat"), Timeout::Never)
+    .await
+    .expect("Failed to produce");
+
+let consumer = create_consumer(&args().skip(1).next()
+    .unwrap_or("localhost:9092".to_string()))?;
+
+consumer.subscribe(&["chat"])?;
 }
