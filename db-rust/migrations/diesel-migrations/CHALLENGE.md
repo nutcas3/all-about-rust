@@ -1,0 +1,1 @@
+1. Create a migration that adds a new age `INT` column to the `test_table_diesel` table. It can be nullable.
